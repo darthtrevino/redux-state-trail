@@ -1,0 +1,21 @@
+{
+  "name": "redux-state-trail",
+  "version": "0.0.1",
+  "description": "Tracks the trailing Redux state of an application.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "redux",
+    "middleware"
+  ],
+  "author": "Chris Trevino",
+  "license": "MIT",
+  "devDependencies": {
+    "typings": "^0.6.8"
+  },
+  "dependencies": {
+    "lodash": "^4.3.0"
+  }
+}
