@@ -22,10 +22,10 @@
     "compileOnSave": true,
     "buildOnSave": false,
     "files": [
-        "src/actions.ts",
         "src/index.ts",
         "src/interfaces.ts",
-        "src/storeEnhancer.ts",
+        "src/middleware.ts",
+        "src/StateTrail.ts",
         "typings/browser.d.ts",
         "typings/browser/ambient/lodash/lodash.d.ts",
         "typings/main.d.ts",

@@ -1,7 +1,7 @@
-import storeEnhancer from './storeEnhancer';
-import * as actions from './actions';
+import middleware from './middleware';
+import StateTrail from './StateTrail';
 
 export = {
-  storeEnhancer,
-  actions
+  stateTrailMiddleware: middleware,
+  StateTrail
 };
