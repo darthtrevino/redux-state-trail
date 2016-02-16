@@ -1,11 +1,14 @@
 import * as Redux from "redux";
 
-export interface IStateHistory {
-  stateHistory: {
-    states: IState[];
-    nextId: number;
-  } 
+export interface IStateHistoryContainer {
+  stateHistory: IStateHistory;
 };
+
+export interface IStateHistory {
+  states: IState[];
+  nextId: number;
+};
+
 
 export interface IState {
   state?: any;

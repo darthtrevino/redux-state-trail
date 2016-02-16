@@ -1,14 +1,20 @@
 import {
   IReduxCreateStore,
+  IStateHistoryContainer,
   IStateHistory,
   IState,
   IStateTrailStoreEnhancer,
   IStoreEnhancer,
   IStoreEnhancerOptions
 } from './interfaces';
+import {
+  ActionTypes,
+  ActionCreators
+} from './actions';
+
 import * as _ from "lodash";
 
-const INITIAL_STATE: IStateHistory = {
+const INITIAL_STATE: IStateHistoryContainer = {
   stateHistory: {
     states: [],
     nextId: 0
@@ -18,7 +24,7 @@ const INITIAL_STATE: IStateHistory = {
 /**
  * Store enhancer that adds state a state-trail
  */
-export default function storeEnhancer(initialState: IStateHistory = INITIAL_STATE, options: IStoreEnhancerOptions) {
+export default function storeEnhancer(initialState: IStateHistoryContainer = INITIAL_STATE, options: IStoreEnhancerOptions) {
     return (createStore: IReduxCreateStore) =>
       (reducer: Redux.Reducer, state = initialState) =>
         createStore(trackStateTrail(reducer, state, options));
@@ -27,11 +33,16 @@ export default function storeEnhancer(initialState: IStateHistory = INITIAL_STAT
 /**
  * Higher-order reducer-wrapper to create a state trail
  */
-function trackStateTrail(reducer, initialState: IStateHistory = INITIAL_STATE, options: IStoreEnhancerOptions = {}): Redux.Reducer {
+function trackStateTrail(reducer, initialState: IStateHistoryContainer = INITIAL_STATE, options: IStoreEnhancerOptions = {}): Redux.Reducer {
   return function(state = initialState, action) {
     const newState = reducer(state, action);
     const stateHistory = newState.stateHistory;
     const trailCapacity = options.capacity;
+
+    // TODO: This might belong in a reducer instead
+    if (action.type === ActionTypes.INJECT_HISTORY) {
+      newState.stateHistory = action.payload;
+    }
 
     if (!stateHistory.states) {
       stateHistory.states = [];
@@ -53,7 +64,7 @@ function trackStateTrail(reducer, initialState: IStateHistory = INITIAL_STATE, o
     if (trailCapacity && stateHistory.states.length > trailCapacity) {
       stateHistory.states.shift();
     }
-    
+
     return newState;
   };
 }
